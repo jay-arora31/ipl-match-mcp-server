@@ -1,5 +1,5 @@
 import os
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from .models import Base
 
@@ -43,7 +43,7 @@ def check_database():
     # Try to query a table to see if it exists
     try:
         with engine.connect() as conn:
-            result = conn.execute("SELECT name FROM sqlite_master WHERE type='table';")
+            result = conn.execute(text("SELECT name FROM sqlite_master WHERE type='table';"))
             tables = result.fetchall()
             return len(tables) > 0
     except:
